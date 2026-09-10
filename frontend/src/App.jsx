@@ -10,6 +10,7 @@ function App() {
   const [influencers, setInfluencers] = useState([]);
   const [communities, setCommunities] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [statusMsg, setStatusMsg] = useState('');
   const [activeFilter, setActiveFilter] = useState(null);
 
   // Fetch all graph & intelligence data from FastAPI backend
@@ -25,6 +26,7 @@ function App() {
       setCommunities(comms || []);
     } catch (err) {
       console.error('Error connecting to Backend API:', err);
+      setStatusMsg('⚠️ Could not connect to backend API (Is FastAPI running on port 8000?)');
     }
   };
 
@@ -37,7 +39,6 @@ function App() {
       return;
     }
 
-    // Filter connections where the selected entity is either the source or target
     const connections = graphData.filter(
       (edge) =>
         (edge.source && edge.source.toLowerCase() === selectedEntity.toLowerCase()) ||
@@ -50,11 +51,14 @@ function App() {
   // Trigger synthetic data ingestion into Neo4j
   const handleIngest = async () => {
     setLoading(true);
+    setStatusMsg('Ingesting raw synthetic data into Neo4j...');
     try {
-      await triggerIngest();
+      const res = await triggerIngest();
+      setStatusMsg(`✅ Success: ${res.message || 'Dataset ingested into Neo4j'}`);
       await loadData(); // Reload graph data automatically
     } catch (err) {
       console.error('Failed to ingest synthetic data:', err);
+      setStatusMsg('❌ Ingestion failed. Ensure FastAPI is running and Neo4j container is up.');
     } finally {
       setLoading(false);
     }
@@ -74,38 +78,49 @@ function App() {
           alignItems: 'center',
           marginBottom: '20px',
           backgroundColor: '#1e293b',
-          padding: '16px 24px',
+          padding: '20px 24px',
           borderRadius: '8px',
           color: '#ffffff',
           boxShadow: '0 4px 6px rgba(0,0,0,0.1)'
         }}
       >
-        <div>
-          <h2 style={{ margin: 0, fontSize: '20px', fontWeight: 'bold' }}>
+        <div style={{ flex: 1 }}>
+          <h2 style={{ margin: 0, fontSize: '22px', fontWeight: 'bold' }}>
             NCRB — AI Criminal Network Intelligence System
           </h2>
-          <small style={{ color: '#94a3b8' }}>PS ID: 26189 | Ministry of Home Affairs</small>
+          <span style={{ color: '#94a3b8', fontSize: '13px' }}>PS ID: 26189 | Ministry of Home Affairs</span>
         </div>
 
-        <button
-          onClick={handleIngest}
-          disabled={loading}
-          style={{
-            padding: '10px 20px',
-            backgroundColor: loading ? '#64748b' : '#2563eb',
-            color: '#ffffff',
-            border: 'none',
-            borderRadius: '6px',
-            fontWeight: 'bold',
-            cursor: loading ? 'not-allowed' : 'pointer',
-            transition: 'background-color 0.2s'
-          }}
-        >
-          {loading ? 'Ingesting Data...' : '⚡ Ingest Synthetic Dataset'}
-        </button>
+        <div>
+          <button
+            onClick={handleIngest}
+            disabled={loading}
+            style={{
+              padding: '12px 24px',
+              backgroundColor: loading ? '#64748b' : '#2563eb',
+              color: '#ffffff',
+              border: 'none',
+              borderRadius: '6px',
+              fontWeight: 'bold',
+              fontSize: '14px',
+              cursor: loading ? 'not-allowed' : 'pointer',
+              boxShadow: '0 2px 4px rgba(0,0,0,0.2)',
+              whiteSpace: 'nowrap'
+            }}
+          >
+            {loading ? 'Ingesting Data...' : '⚡ Ingest Synthetic Dataset'}
+          </button>
+        </div>
       </header>
 
-      {/* Search & Active Filter Bar */}
+      {/* Status Bar Notification */}
+      {statusMsg && (
+        <div style={{ padding: '12px 16px', backgroundColor: '#e2e8f0', borderRadius: '6px', marginBottom: '16px', fontSize: '14px', fontWeight: '500' }}>
+          {statusMsg}
+        </div>
+      )}
+
+      {/* Search Bar */}
       <div style={{ backgroundColor: '#ffffff', padding: '16px', borderRadius: '8px', marginBottom: '20px', boxShadow: '0 1px 3px rgba(0,0,0,0.1)' }}>
         <SearchBar graphData={graphData} onSearchSelect={handleSearchSelect} />
         

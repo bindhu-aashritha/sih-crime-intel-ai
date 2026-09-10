@@ -3,7 +3,7 @@ import os
 
 class KnowledgeGraphDB:
     def __init__(self):
-        uri = os.getenv("NEO4J_URI", "bolt://localhost:7687")
+        uri = os.getenv("NEO4J_URI", "bolt://127.0.0.1:7687")
         user = os.getenv("NEO4J_USER", "neo4j")
         password = os.getenv("NEO4J_PASSWORD", "password")
         self.driver = GraphDatabase.driver(uri, auth=(user, password))
