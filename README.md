@@ -53,27 +53,6 @@ This project bridges theoretical graph mechanics with operational law enforcemen
 
 ---
 
-## Repository Structure
-
-├── backend/
-│   ├── main.py                  # FastAPI server entry point & REST endpoints
-│   ├── kaggle_ingestor.py       # Real-world Kaggle crime dataset ETL pipeline
-│   ├── nlp_processor.py         # spaCy Entity Recognition & Fuzzy Matching module
-│   └── requirements.txt         # Python dependencies
-├── frontend/
-│   ├── src/
-│   │   ├── components/
-│   │   │   ├── GraphCanvas.jsx  # vis-network physics layout container
-│   │   │   ├── DossierExport.jsx# Client-side jsPDF reporting module
-│   │   │   └── AnalyticsPanel.jsx# Centrality ranking list
-│   │   ├── App.jsx
-│   │   └── index.js
-│   └── package.json
-└── README.md
-
-
----
-
 ## Installation & Setup
 
 ### 1. Prerequisites
