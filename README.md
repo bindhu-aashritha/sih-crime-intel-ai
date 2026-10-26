@@ -4,7 +4,7 @@ An end-to-end intelligence link-charting and graph analytics engine built to ass
 
 ---
 
-## Executive Summary
+## Summary
 
 Manual cross-referencing of Call Detail Records (CDRs), financial transaction logs, and unstructured First Information Reports (FIRs) in spreadsheets takes hours and conceals hidden facilitators. 
 
@@ -28,7 +28,16 @@ This platform ingests real-world, multi-source crime data, parses unstructured t
   * **Blue:** Incident Locations / Cities
 
 ---
-
+## Project Outputs
+* FIG: Interactive Neo4j force-directed graph view with entity extraction panels.
+<img width="1058" height="536" alt="image" src="https://github.com/user-attachments/assets/5b3ab9db-d257-4177-a050-969b7b28bcd9" />
+* FIG: Criminal Relationship Maps and Network influencers
+<img width="539" height="948" alt="image" src="https://github.com/user-attachments/assets/b53057df-2e66-415a-8cf9-d89b71ea7f73" />
+* FIG: Detailed PDF Report generated
+<img width="965" height="705" alt="image" src="https://github.com/user-attachments/assets/3ab4cd42-8eb6-465e-a1e0-d4f0d5a8184a" />
+<img width="994" height="648" alt="image" src="https://github.com/user-attachments/assets/dbebd6c7-d53f-4438-b293-cd3379ffefa1" />
+<img width="914" height="695" alt="image" src="https://github.com/user-attachments/assets/20884847-65de-43e2-afef-1aa8ed203a2f" />
+---
 ## Architecture & Technology Stack
 ### Stack Components
 
